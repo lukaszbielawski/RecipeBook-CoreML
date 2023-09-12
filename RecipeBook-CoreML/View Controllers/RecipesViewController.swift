@@ -8,7 +8,6 @@
 import UIKit
 
 class RecipesViewController: UIViewController, UITableViewDelegate {
-    var characters = ["Link", "Zelda", "Ganondorf", "Midna"]
     var tableView = UITableView()
     var viewModel = RecipesViewModel()
 
@@ -30,7 +29,6 @@ class RecipesViewController: UIViewController, UITableViewDelegate {
         tableView.dataSource = self
 
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 44
         tableView.separatorStyle = .none
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -59,8 +57,12 @@ extension RecipesViewController: UITableViewDataSource {
             return UITableViewCell()
         }
 
-        cell.data = viewModel.recipes[indexPath.row]
+        cell.recipeData = viewModel.recipes[indexPath.row]
         cell.loadData()
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(viewModel.recipes[indexPath.row].image ?? "null")
     }
 }

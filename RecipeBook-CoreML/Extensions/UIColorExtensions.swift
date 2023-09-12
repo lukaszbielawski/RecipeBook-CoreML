@@ -16,4 +16,8 @@ extension UIColor {
     static var secondaryColor = UIColor(named: "SecondaryColor")!
     
     static var backgroundColor = UIColor(named: "BackgroundColor")!
+    
+    static var mintColor = UIColor(named: "MintColor")!
+    
+    static var raspberryColor = UIColor(named: "RaspberryColor")!
 }
