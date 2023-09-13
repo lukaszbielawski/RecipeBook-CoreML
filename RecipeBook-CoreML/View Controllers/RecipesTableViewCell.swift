@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RecipesTableViewCell: UITableViewCell {
+final class RecipesTableViewCell: UITableViewCell {
     var recipeData: Recipe?
 
     lazy var recipeImageView = {
@@ -15,7 +15,6 @@ class RecipesTableViewCell: UITableViewCell {
         recipeImageView.translatesAutoresizingMaskIntoConstraints = false
         recipeImageView.backgroundColor = .secondaryColor
         recipeImageView.contentMode = .scaleAspectFill
-//        recipeImageView.image = UIImage(named: "AppIcon")
 
         recipeImageView.layer.cornerRadius = 16
         recipeImageView.layer.masksToBounds = true
@@ -151,9 +150,7 @@ class RecipesTableViewCell: UITableViewCell {
             recipeTitleLabel.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -8),
 //
             recipeAttributesStackView.topAnchor.constraint(equalTo: recipeTitleLabel.bottomAnchor, constant: 4),
-//            recipeAttributesStackView.bottomAnchor.constraint(equalTo: recipeTitleLabel.bottomAnchor, constant: 4),
             recipeAttributesStackView.leadingAnchor.constraint(equalTo: recipeImageView.trailingAnchor, constant: 16),
-//
 //
             healthScoreLabel.leadingAnchor.constraint(equalTo: recipeImageView.trailingAnchor, constant: 16),
             healthScoreLabel.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -16),
@@ -192,9 +189,6 @@ class RecipesTableViewCell: UITableViewCell {
         }
 
         healthScoreLabel.progress = Float(recipeData.healthScore)
-
-//        recipeInstructionsLabel.text =
-//            "Ingredients: \n• \(recipeData.extendedIngredients.map { $0.name }.joined(separator: "\n• "))"
     }
 
     @available(*, unavailable)

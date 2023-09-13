@@ -14,10 +14,10 @@ extension UIColor {
     static var primaryColor = UIColor(named: "PrimaryColor")!
 
     static var secondaryColor = UIColor(named: "SecondaryColor")!
-    
+
     static var backgroundColor = UIColor(named: "BackgroundColor")!
-    
+
     static var mintColor = UIColor(named: "MintColor")!
-    
+
     static var raspberryColor = UIColor(named: "RaspberryColor")!
 }

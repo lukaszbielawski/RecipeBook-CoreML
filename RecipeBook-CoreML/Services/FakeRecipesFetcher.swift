@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class FakeRecipesFetcher: RecipesFetcher {
+final class FakeRecipesFetcher: RecipesFetcher {
     static var shared = FakeRecipesFetcher()
 
     private init() {}

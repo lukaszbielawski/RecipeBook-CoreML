@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class ProgressLabel: PaddingLabel {
+final class ProgressLabel: PaddingLabel {
     var progressBarColor: UIColor = .raspberryColor
     var fontType = UIFont.boldSystemFont(ofSize: 16)
 
@@ -22,20 +22,11 @@ class ProgressLabel: PaddingLabel {
     override func draw(_ rect: CGRect) {
         let context = UIGraphicsGetCurrentContext()!
         let size = bounds.size
-        
-        self.textAlignment = .left
-        
         let progressMessage = NSString(string: "Health score: \(Int(progress))%")
         let stringRange = NSRange(0 ... progressMessage.length + 1)
-
         let attributedString = String(progressMessage).attachIconToString(systemName: "heart.fill", color: .white)
-
-        var attributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: fontType]
-        let textSize = progressMessage.size(withAttributes: attributes)
-
         let progressX = ceil(CGFloat(progress) / 100 * size.width)
-        let textPoint = CGPoint(x: ceil((size.width - textSize.width) / 2.0),
-                                y: ceil((size.height - textSize.height) / 2.0))
+        let textPoint = CGPoint(x: 4, y: 4)
 
         attributedString.addAttribute(NSAttributedString.Key.font,
                                       value: fontType,
@@ -44,7 +35,7 @@ class ProgressLabel: PaddingLabel {
         progressBarColor.setFill()
         context.fill(bounds)
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor,
-                                      value: textColor,
+                                      value: textColor!,
                                       range: stringRange)
 
         attributedString.draw(at: textPoint)

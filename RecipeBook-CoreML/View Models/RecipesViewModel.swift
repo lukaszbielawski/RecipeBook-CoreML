@@ -22,6 +22,9 @@ final class RecipesViewModel {
     func loadRecipes() {
         recipesFetcher
             .fetchRecipes()
+            .map { recipes in
+                recipes.filter( { !$0.analyzedInstructions.isEmpty })
+            }
             .sink { completion in
                 switch completion {
                 case .failure:

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
+final class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
@@ -16,7 +16,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        let firstTab = RecipesViewController()
+        let firstTab = RecipesTableViewController()
         let firstTabBarItem = UITabBarItem(title: "Recipes", image: UIImage(systemName: "book.fill"),
                                            selectedImage: UIImage(systemName: "book.fill"))
         firstTab.tabBarItem = firstTabBarItem

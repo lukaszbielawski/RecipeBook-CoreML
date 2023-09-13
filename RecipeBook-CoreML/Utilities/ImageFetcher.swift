@@ -15,14 +15,14 @@ enum DownloadError: Error {
     case decodingError
 }
 
-class ImageDownloader {
+final class ImageDownloader {
     private(set) static var shared = ImageDownloader()
 
     private init() {}
 
-    func downloadImage(from url: String) async throws -> UIImage {
+    func downloadImage(from url: String, crop: Bool = true) async throws -> UIImage {
         guard let url = URL(string: url) else {
-            throw DownloadError.invalidResponse
+            throw DownloadError.invalidUrl
         }
         let (data, response) = try await URLSession.shared.data(for: URLRequest(url: url))
 
@@ -35,6 +35,10 @@ class ImageDownloader {
             throw DownloadError.decodingError
         }
 
-        return image.cropImage
+        if crop {
+            return image.cropImage
+        } else {
+            return image
+        }
     }
 }

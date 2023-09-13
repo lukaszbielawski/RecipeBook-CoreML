@@ -13,7 +13,7 @@
 		B27E84132AAF51B50089C5B8 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27E84122AAF51B50089C5B8 /* TabBarViewController.swift */; };
 		B27E84162AAF53DD0089C5B8 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27E84152AAF53DD0089C5B8 /* ScannerViewController.swift */; };
 		B27E841A2AAF56D60089C5B8 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27E84192AAF56D60089C5B8 /* UIColorExtensions.swift */; };
-		B27E841C2AAF5ADE0089C5B8 /* RecipesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27E841B2AAF5ADE0089C5B8 /* RecipesViewController.swift */; };
+		B27E841C2AAF5ADE0089C5B8 /* RecipesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27E841B2AAF5ADE0089C5B8 /* RecipesTableViewController.swift */; };
 		B27E841E2AAF5CFE0089C5B8 /* RecipesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27E841D2AAF5CFE0089C5B8 /* RecipesTableViewCell.swift */; };
 		B27E84212AAF68370089C5B8 /* RecipesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27E84202AAF68370089C5B8 /* RecipesViewModel.swift */; };
 		B27E84242AAF686F0089C5B8 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27E84232AAF686F0089C5B8 /* Recipe.swift */; };
@@ -26,6 +26,10 @@
 		B2DBF2432AB063B8001F053A /* ImageFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DBF2422AB063B8001F053A /* ImageFetcher.swift */; };
 		B2DBF2482AB07114001F053A /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DBF2472AB07114001F053A /* UIImageExtensions.swift */; };
 		B2DBF24A2AB09601001F053A /* ProgressLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DBF2492AB09601001F053A /* ProgressLabel.swift */; };
+		B2E91D7E2AB1AFFE00468E49 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E91D7D2AB1AFFE00468E49 /* DetailsViewController.swift */; };
+		B2E91D802AB1E49900468E49 /* CAGradientLayerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E91D7F2AB1E49900468E49 /* CAGradientLayerExtensions.swift */; };
+		B2E91D822AB201E000468E49 /* FadeScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E91D812AB201E000468E49 /* FadeScrollView.swift */; };
+		B2E91D842AB244B400468E49 /* UIStackViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E91D832AB244B400468E49 /* UIStackViewExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,7 +41,7 @@
 		B27E84122AAF51B50089C5B8 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		B27E84152AAF53DD0089C5B8 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		B27E84192AAF56D60089C5B8 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
-		B27E841B2AAF5ADE0089C5B8 /* RecipesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesViewController.swift; sourceTree = "<group>"; };
+		B27E841B2AAF5ADE0089C5B8 /* RecipesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesTableViewController.swift; sourceTree = "<group>"; };
 		B27E841D2AAF5CFE0089C5B8 /* RecipesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesTableViewCell.swift; sourceTree = "<group>"; };
 		B27E84202AAF68370089C5B8 /* RecipesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesViewModel.swift; sourceTree = "<group>"; };
 		B27E84232AAF686F0089C5B8 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
@@ -50,6 +54,10 @@
 		B2DBF2422AB063B8001F053A /* ImageFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFetcher.swift; sourceTree = "<group>"; };
 		B2DBF2472AB07114001F053A /* UIImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
 		B2DBF2492AB09601001F053A /* ProgressLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressLabel.swift; sourceTree = "<group>"; };
+		B2E91D7D2AB1AFFE00468E49 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		B2E91D7F2AB1E49900468E49 /* CAGradientLayerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAGradientLayerExtensions.swift; sourceTree = "<group>"; };
+		B2E91D812AB201E000468E49 /* FadeScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeScrollView.swift; sourceTree = "<group>"; };
+		B2E91D832AB244B400468E49 /* UIStackViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackViewExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,8 +112,9 @@
 			children = (
 				B27E84122AAF51B50089C5B8 /* TabBarViewController.swift */,
 				B27E84152AAF53DD0089C5B8 /* ScannerViewController.swift */,
-				B27E841B2AAF5ADE0089C5B8 /* RecipesViewController.swift */,
+				B27E841B2AAF5ADE0089C5B8 /* RecipesTableViewController.swift */,
 				B27E841D2AAF5CFE0089C5B8 /* RecipesTableViewCell.swift */,
+				B2E91D7D2AB1AFFE00468E49 /* DetailsViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -116,6 +125,8 @@
 				B27E84192AAF56D60089C5B8 /* UIColorExtensions.swift */,
 				B27E84312AAF7C9B0089C5B8 /* StringExtensions.swift */,
 				B2DBF2472AB07114001F053A /* UIImageExtensions.swift */,
+				B2E91D7F2AB1E49900468E49 /* CAGradientLayerExtensions.swift */,
+				B2E91D832AB244B400468E49 /* UIStackViewExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -166,6 +177,7 @@
 			children = (
 				B2DBF23E2AB05DBE001F053A /* PaddingLabel.swift */,
 				B2DBF2492AB09601001F053A /* ProgressLabel.swift */,
+				B2E91D812AB201E000468E49 /* FadeScrollView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -272,19 +284,23 @@
 			files = (
 				B27E84212AAF68370089C5B8 /* RecipesViewModel.swift in Sources */,
 				B27E84132AAF51B50089C5B8 /* TabBarViewController.swift in Sources */,
-				B27E841C2AAF5ADE0089C5B8 /* RecipesViewController.swift in Sources */,
+				B27E841C2AAF5ADE0089C5B8 /* RecipesTableViewController.swift in Sources */,
 				B2DBF24A2AB09601001F053A /* ProgressLabel.swift in Sources */,
 				B2DBF2482AB07114001F053A /* UIImageExtensions.swift in Sources */,
+				B2E91D802AB1E49900468E49 /* CAGradientLayerExtensions.swift in Sources */,
 				B27E83F32AAEF53C0089C5B8 /* AppDelegate.swift in Sources */,
 				B27E841A2AAF56D60089C5B8 /* UIColorExtensions.swift in Sources */,
 				B27E84162AAF53DD0089C5B8 /* ScannerViewController.swift in Sources */,
 				B27E84242AAF686F0089C5B8 /* Recipe.swift in Sources */,
 				B27E84272AAF6B110089C5B8 /* NetworkRecipesFetcher.swift in Sources */,
+				B2E91D842AB244B400468E49 /* UIStackViewExtensions.swift in Sources */,
 				B2DBF23F2AB05DBE001F053A /* PaddingLabel.swift in Sources */,
+				B2E91D7E2AB1AFFE00468E49 /* DetailsViewController.swift in Sources */,
 				B2DBF2432AB063B8001F053A /* ImageFetcher.swift in Sources */,
 				B27E841E2AAF5CFE0089C5B8 /* RecipesTableViewCell.swift in Sources */,
 				B27E83F52AAEF53C0089C5B8 /* SceneDelegate.swift in Sources */,
 				B27E842D2AAF6FE10089C5B8 /* FakeRecipesFetcher.swift in Sources */,
+				B2E91D822AB201E000468E49 /* FadeScrollView.swift in Sources */,
 				B27E84322AAF7C9B0089C5B8 /* StringExtensions.swift in Sources */,
 				B27E84302AAF72010089C5B8 /* RecipesFetcher.swift in Sources */,
 			);

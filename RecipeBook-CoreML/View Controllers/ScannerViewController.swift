@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ScannerViewController: UIViewController {
+final class ScannerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .primaryColor

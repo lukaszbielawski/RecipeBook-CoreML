@@ -14,6 +14,7 @@ extension UIImage {
 
         let width = cgImage.width
         let height = cgImage.height
+        let tolerance = 0.98
 
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let bytesPerPixel = 4
@@ -48,7 +49,7 @@ extension UIImage {
                 let red = CGFloat(ptr[index]) / 255.0
                 let green = CGFloat(ptr[index + 1]) / 255.0
                 let blue = CGFloat(ptr[index + 2]) / 255.0
-                if red >= 0.98 && green >= 0.98 && blue >= 0.98 {
+                if red >= tolerance && green >= tolerance && blue >= tolerance {
                     if firstX == nil {
                         firstX = pixelX
                     }
@@ -68,12 +69,46 @@ extension UIImage {
             }
         }
 
-        let rect = CGRect(x: CGFloat(minX) * 1.1,
-                          y: CGFloat(minY) * 1.1,
-                          width: CGFloat(width) - 2.2 * CGFloat(minX),
-                          height: CGFloat(height) - 2.2 * CGFloat(minY))
+        var maxX = 0
+        var maxY = 0
 
-//        print("\(minX) \(minY)")
+        for pixelX in (1 ..< width).reversed() {
+            var whitePixelCounter = 0
+            var firstY: Int?
+            var firstX: Int?
+
+            for pixelY in (1 ..< height).reversed() {
+                let index = bytesPerRow * Int(pixelY) + bytesPerPixel * Int(pixelX)
+                let red = CGFloat(ptr[index]) / 255.0
+                let green = CGFloat(ptr[index + 1]) / 255.0
+                let blue = CGFloat(ptr[index + 2]) / 255.0
+                if red >= tolerance && green >= tolerance && blue >= tolerance {
+                    if firstX == nil {
+                        firstX = pixelX
+                    }
+                    whitePixelCounter += 1
+                } else {
+                    if firstY == nil {
+                        firstY = pixelY
+                    }
+                }
+                maxX = pixelX
+                maxY = pixelY
+            }
+            if whitePixelCounter < height / 4 {
+                maxX = firstX ?? 0
+                maxY = firstY ?? 0
+                break
+            }
+        }
+
+        let rectX = min(minX, width - maxX)
+        let rectY = min(minY, width - maxY)
+
+        let rect = CGRect(x: CGFloat(rectX) * 1.1,
+                          y: CGFloat(rectY) * 1.1,
+                          width: CGFloat(width) - 2.2 * CGFloat(rectX),
+                          height: CGFloat(height) - 2.2 * CGFloat(rectY))
 
         let croppedImage = self.cgImage!.cropping(to: rect)
         return UIImage(cgImage: croppedImage!, scale: scale, orientation: imageOrientation)
