@@ -9,14 +9,11 @@ import Foundation
 import UIKit
 
 extension String {
-    var removeHtmlTags: String {
-        self.replacingOccurrences(of: "<[^>]+>", with: " ", options: .regularExpression, range: nil)
-    }
-
-    var removeNewlineCharsAndWhitespaces: String {
+    var insertNewlineAfterEndOfSentence: String {
         self
-            .replacingOccurrences(of: "^\\s*", with: "", options: .regularExpression)
-            .trimmingCharacters(in: .whitespaces)
+            .replacingOccurrences(of: ". ", with: ".")
+            .replacingOccurrences(of: ".", with: ".\n")
+            .replacingOccurrences(of: ".\n)", with: ".)\n")
     }
 
     func attachIconToString(systemName: String, color: UIColor, margin: CGFloat = 10.0) -> NSMutableAttributedString {

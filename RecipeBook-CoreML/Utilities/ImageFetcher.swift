@@ -24,6 +24,7 @@ final class ImageDownloader {
         guard let url = URL(string: url) else {
             throw DownloadError.invalidUrl
         }
+
         let (data, response) = try await URLSession.shared.data(for: URLRequest(url: url))
 
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {

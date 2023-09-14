@@ -10,6 +10,15 @@ import UIKit
 final class RecipesTableViewCell: UITableViewCell {
     var recipeData: Recipe?
 
+    var aspectRatioCheck: CGFloat = {
+        let deviceWidth = UIScreen.main.bounds.width * UIScreen.main.scale
+        let deviceHeight = UIScreen.main.bounds.height * UIScreen.main.scale
+        let testDeviceAspectRatio = deviceHeight / deviceWidth
+
+        return testDeviceAspectRatio > 2.0 ? 2 / testDeviceAspectRatio : 1.0
+
+    }()
+
     lazy var recipeImageView = {
         let recipeImageView = UIImageView()
         recipeImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -92,7 +101,7 @@ final class RecipesTableViewCell: UITableViewCell {
         healthScoreLabel.layer.borderColor = UIColor.raspberryColor.cgColor
         healthScoreLabel.layer.borderWidth = 1
         healthScoreLabel.paddingLeft = 4.0
-        healthScoreLabel.paddingRight = 0.0
+        healthScoreLabel.paddingRight = 4.0
         healthScoreLabel.paddingTop = 4.0
         healthScoreLabel.paddingBottom = 4.0
 
@@ -134,36 +143,39 @@ final class RecipesTableViewCell: UITableViewCell {
         guard let backgroundView = backgroundView else { return }
 
         NSLayoutConstraint.activate([
-            backgroundView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
-            backgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
-            backgroundView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            backgroundView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            backgroundView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            backgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            backgroundView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
+            backgroundView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
 //
             recipeImageView.topAnchor.constraint(equalTo: backgroundView.topAnchor),
             recipeImageView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor),
             recipeImageView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor),
-            recipeImageView.widthAnchor.constraint(equalToConstant: CGFloat(Int(UIScreen.main.bounds.height * 0.20))),
-            recipeImageView.heightAnchor.constraint(equalToConstant: CGFloat(Int(UIScreen.main.bounds.height * 0.20))),
+            recipeImageView.widthAnchor.constraint(equalToConstant:
+                CGFloat(Int(UIScreen.main.bounds.height * 0.20 * aspectRatioCheck))),
+            recipeImageView.heightAnchor.constraint(equalToConstant:
+                CGFloat(Int(UIScreen.main.bounds.height * 0.20 * aspectRatioCheck))),
 //
             recipeTitleLabel.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 8),
             recipeTitleLabel.leadingAnchor.constraint(equalTo: recipeImageView.trailingAnchor, constant: 16),
             recipeTitleLabel.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -8),
 //
             recipeAttributesStackView.topAnchor.constraint(equalTo: recipeTitleLabel.bottomAnchor, constant: 4),
-            recipeAttributesStackView.leadingAnchor.constraint(equalTo: recipeImageView.trailingAnchor, constant: 16),
+            recipeAttributesStackView.leadingAnchor.constraint(equalTo: recipeImageView.trailingAnchor, constant: 8),
 //
-            healthScoreLabel.leadingAnchor.constraint(equalTo: recipeImageView.trailingAnchor, constant: 16),
             healthScoreLabel.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -16),
-            healthScoreLabel.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16)
+            healthScoreLabel.leadingAnchor.constraint(equalTo: recipeImageView.trailingAnchor, constant: 8),
+            healthScoreLabel.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -8),
         ])
     }
 
     func loadData() {
         guard let recipeData = recipeData else { return }
 
-        if let imageUrl = recipeData.image {
+        if var imageUrl = recipeData.image {
             Task {
                 do {
+                    imageUrl = imageUrl.replacingOccurrences(of: "556x370", with: "636x393")
                     recipeImageView.image = try await ImageDownloader.shared.downloadImage(from: imageUrl)
                 } catch {
                     print(error)

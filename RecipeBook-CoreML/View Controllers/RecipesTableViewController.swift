@@ -37,6 +37,7 @@ final class RecipesTableViewController: UIViewController, UITableViewDelegate {
         tableView.separatorStyle = .none
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.showsVerticalScrollIndicator = false
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
