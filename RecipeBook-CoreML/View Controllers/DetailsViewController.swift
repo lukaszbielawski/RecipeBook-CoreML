@@ -15,8 +15,10 @@ final class DetailsViewController: UIViewController {
     var recipe: Recipe
     var image: UIImage
     private var lastContentOffset: CGFloat = 0
-    private var descriptionLabelConstraint: NSLayoutConstraint?
-    private lazy var stepOffset = (view.layer.bounds.height * 0.5)
+    private var instructionLabelConstraint: NSLayoutConstraint?
+    private var nextStepButtonConstraint: NSLayoutConstraint?
+    private var stepLabelConstraint: NSLayoutConstraint?
+    private lazy var stepOffset = (view.layer.bounds.height * 0.50)
     private var stepViewsArray: [UIView] = []
     private var ingredientsData: [Ingredient] = []
     private var cancellable: AnyCancellable?
@@ -27,28 +29,6 @@ final class DetailsViewController: UIViewController {
         didSet {
             if currentStep != oldValue {
                 print("set \(currentStep)")
-                if oldValue == 0 {
-                    let innerButton = stepViewsArray.first?.subviews
-                        .first(where: { type(of: $0) == UIButton.self })
-                    let innerLabel = innerButton?.subviews.first(where: { type(of: $0) == PaddingLabel.self }) as? PaddingLabel
-//                    innerButton?.removeConstraints(innerButton?.constraints ?? [])
-                    
-                    
-//                    innerLabel?.text = "Let's start"
-//                    nextStepButton.topAnchor.constraint(equalTo: stepView.topAnchor, constant: 8).isActive = true
-//                    stepLabel.topAnchor.constraint(equalTo: nextStepButton.bottomAnchor, constant: 8).isActive = true
-//                } else {
-//                    innerLabel.text = "Next step"
-//                    stepLabel.topAnchor.constraint(equalTo: stepView.topAnchor, constant: 16).isActive = true
-//                    nextStepButton.topAnchor.constraint(equalTo: stepLabel.bottomAnchor, constant: 8).isActive = true
-
-                    innerLabel?.text = "Next step"
-                } else if currentStep == 0 {
-                    let innerButton = stepViewsArray.first?.subviews
-                        .first(where: { type(of: $0) == UIButton.self })
-                    let innerLabel = innerButton?.subviews.first(where: { type(of: $0) == PaddingLabel.self }) as? PaddingLabel
-                    innerLabel?.text = "Let's start"
-                }
                 setStep(step: currentStep)
             }
         }
@@ -68,7 +48,7 @@ final class DetailsViewController: UIViewController {
         detailsTitleLabel.textColor = .secondaryColor
         detailsTitleLabel.numberOfLines = 0
         detailsTitleLabel.textAlignment = .center
-        detailsTitleLabel.font = UIFont.systemFont(ofSize: 36.0, weight: .bold)
+        detailsTitleLabel.font = UIFont.systemFont(ofSize: 27.0, weight: .bold)
         detailsTitleLabel.adjustsFontSizeToFitWidth = true
         detailsTitleLabel.text = recipe.title
 
@@ -120,7 +100,7 @@ final class DetailsViewController: UIViewController {
         descriptionLabel.textColor = UIColor.secondaryColor
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textAlignment = .center
-        descriptionLabel.font = UIFont.systemFont(ofSize: 27.0 * aspectRatioFontFactor, weight: .bold)
+        descriptionLabel.font = UIFont.systemFont(ofSize: 27.0, weight: .bold)
         descriptionLabel.adjustsFontSizeToFitWidth = true
         descriptionLabel.text = "Instructions"
 
@@ -272,11 +252,11 @@ final class DetailsViewController: UIViewController {
 
         scrollStackViewContainer.topAnchor.constraint(equalTo: fadeScrollView.topAnchor,
                                                       constant: detailImageView.frame.height / 2).isActive = true
-        if descriptionLabelConstraint == nil {
-            descriptionLabelConstraint =
+        if instructionLabelConstraint == nil {
+            instructionLabelConstraint =
                 instructionsLabel.bottomAnchor.constraint(equalTo: fadeScrollView.topAnchor,
                                                           constant: detailImageView.frame.height / 2)
-            descriptionLabelConstraint?.isActive = true
+            instructionLabelConstraint?.isActive = true
         }
 
         imageGradientLayer.frame = detailImageView.bounds
@@ -384,10 +364,16 @@ final class DetailsViewController: UIViewController {
             stepView.addSubview(nextStepButton)
 
             if step.number == 1 {
-//                stepLabel.isHidden = true
+                stepLabel.layer.opacity = 0.0
                 innerLabel.text = "Let's start"
-                nextStepButton.topAnchor.constraint(equalTo: stepView.topAnchor, constant: 8).isActive = true
-                stepLabel.topAnchor.constraint(equalTo: nextStepButton.bottomAnchor, constant: 8).isActive = true
+                if nextStepButtonConstraint == nil {
+                    nextStepButtonConstraint = nextStepButton.topAnchor.constraint(equalTo: stepView.topAnchor, constant: 8)
+                    nextStepButtonConstraint?.isActive = true
+                }
+                if stepLabelConstraint == nil {
+                    stepLabelConstraint = stepLabel.topAnchor.constraint(equalTo: nextStepButton.bottomAnchor, constant: 8)
+                    stepLabelConstraint?.isActive = true
+                }
             } else {
                 innerLabel.text = "Next step"
                 stepLabel.topAnchor.constraint(equalTo: stepView.topAnchor, constant: 16).isActive = true
@@ -422,6 +408,11 @@ final class DetailsViewController: UIViewController {
             .sink { [weak self] value in
                 let modValue = 0.5 * (1 - cos(.pi * value))
                 guard let self = self else { return }
+
+                if value > 1.0 / frames && abs(lastContentOffset - (previousValue + difference * modValue)) > 15 {
+                    cancellable?.cancel()
+                    return
+                }
                 self.fadeScrollView.setContentOffset(CGPoint(x: 0.0,
                                                              y: previousValue + difference * modValue),
                                                      animated: false)
@@ -439,9 +430,9 @@ final class DetailsViewController: UIViewController {
 
         let attributedString =
             NSMutableAttributedString(string: stepLabelContent, attributes:
-                [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17.0 * aspectRatioFontFactor, weight: .thin)])
+                [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17.0, weight: .thin)])
         let boldFontAttribute = [NSAttributedString.Key.font:
-            UIFont.systemFont(ofSize: 24.0 * aspectRatioFontFactor, weight: .bold)]
+            UIFont.systemFont(ofSize: 24.0, weight: .bold)]
         attributedString.addAttributes(boldFontAttribute, range: NSMakeRange(0, step.number.romanNumeral.count))
 
         stepLabel.attributedText = attributedString
@@ -472,6 +463,22 @@ extension DetailsViewController: UIScrollViewDelegate {
 
 //        print(currentStepFloat)
 
+        instructionLabelConstraint!.constant = max(0, ceil(detailImageView.frame.height / 2 - lastContentOffset))
+
+        fadeScrollView.gradientLayer.colors = [fadeScrollView.topOpacity,
+                                               fadeScrollView.opaqueColor,
+                                               fadeScrollView.opaqueColor,
+                                               fadeScrollView.bottomOpacity]
+
+        let nextStepButton = stepViewsArray.first!.subviews
+            .first(where: { type(of: $0) == UIButton.self })!
+
+        let stepLabel = stepViewsArray.first!.subviews
+            .first(where: { type(of: $0) == UILabel.self })!
+
+        let innerLabel = nextStepButton.subviews
+            .first(where: { type(of: $0) == PaddingLabel.self })! as? PaddingLabel
+
         let currentStepFloatReminder = currentStepFloat.truncatingRemainder(dividingBy: 1)
 
         if (0.0...0.1).contains(currentStepFloatReminder) ||
@@ -481,20 +488,23 @@ extension DetailsViewController: UIScrollViewDelegate {
         } else if (0.1...0.29).contains(currentStepFloatReminder) ||
             (0.71...0.9).contains(currentStepFloatReminder)
         {
-            ingredientsScrollView.layer.opacity = Float(currentStepFloatReminder > 0.5
+            let opacityValue = Float(currentStepFloatReminder > 0.5
                 ? (0.9 - currentStepFloatReminder) * (100 / 19) : (currentStepFloatReminder - 0.1) * (100 / 19))
+
+            ingredientsScrollView.layer.opacity = opacityValue
         } else {
             ingredientsScrollView.layer.opacity = 1
         }
 
-//        print(ingredientsScrollView.layer.opacity)
+        let unsignedVariable = (currentStepFloat - 1.04) / 0.25
 
-        descriptionLabelConstraint!.constant = max(0, ceil(detailImageView.frame.height / 2 - lastContentOffset))
+        let variable = min(max(unsignedVariable, 0.0), 1.0)
+        innerLabel?.textColor = UIColor.white.withAlphaComponent(CGFloat(Float(abs(unsignedVariable) * 2)))
+        innerLabel?.text = variable < 0.01 ? "Let's start" : "Next step"
+        stepLabel.layer.opacity = Float(variable)
 
-        fadeScrollView.gradientLayer.colors = [fadeScrollView.topOpacity,
-                                               fadeScrollView.opaqueColor,
-                                               fadeScrollView.opaqueColor,
-                                               fadeScrollView.bottomOpacity]
+        stepLabelConstraint!.constant = -variable * (16.0 + stepLabel.layer.bounds.height + nextStepButton.layer.bounds.height) + 8.0
+        nextStepButtonConstraint!.constant = variable * (8.0 + stepLabel.layer.bounds.height) + 8.0
     }
 }
 
