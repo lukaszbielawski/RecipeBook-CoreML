@@ -8,13 +8,9 @@
 import UIKit
 
 class ShadowImageView: UIImageView {
-     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        // add the shadow to the base view
-   
-        
-    }
 
+        // add the shadow to the base view
+    }
 }

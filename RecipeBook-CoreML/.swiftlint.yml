@@ -1,2 +1,20 @@
 disabled_rules:
 - opening_brace
+- force_cast
+- trailing_comma
+
+identifier_name:
+    excluded:
+    - vm
+    - vc
+    - id
+    - x
+    - y
+    - z
+    - i
+
+large_tuple:
+    warning: 4
+    error: 5
+        
+    

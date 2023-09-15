@@ -38,7 +38,7 @@ final class RecipesTableViewController: UIViewController, UITableViewDelegate {
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.showsVerticalScrollIndicator = false
-        
+
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -46,7 +46,7 @@ final class RecipesTableViewController: UIViewController, UITableViewDelegate {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
 
         ])
-     
+
         tableView.register(RecipesTableViewCell.self, forCellReuseIdentifier: "cell")
     }
 

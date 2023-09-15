@@ -32,6 +32,8 @@
 		B2E91D802AB1E49900468E49 /* CAGradientLayerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E91D7F2AB1E49900468E49 /* CAGradientLayerExtensions.swift */; };
 		B2E91D822AB201E000468E49 /* FadeScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E91D812AB201E000468E49 /* FadeScrollView.swift */; };
 		B2E91D842AB244B400468E49 /* UIStackViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E91D832AB244B400468E49 /* UIStackViewExtensions.swift */; };
+		B2F225C82AB4A14D0014C768 /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F225C72AB4A14D0014C768 /* DetailsViewModel.swift */; };
+		B2FACC622AB4492B0020030E /* NextStepButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FACC612AB4492B0020030E /* NextStepButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +64,8 @@
 		B2E91D7F2AB1E49900468E49 /* CAGradientLayerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAGradientLayerExtensions.swift; sourceTree = "<group>"; };
 		B2E91D812AB201E000468E49 /* FadeScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeScrollView.swift; sourceTree = "<group>"; };
 		B2E91D832AB244B400468E49 /* UIStackViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackViewExtensions.swift; sourceTree = "<group>"; };
+		B2F225C72AB4A14D0014C768 /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
+		B2FACC612AB4492B0020030E /* NextStepButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextStepButton.swift; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				B27E84202AAF68370089C5B8 /* RecipesViewModel.swift */,
+				B2F225C72AB4A14D0014C768 /* DetailsViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -184,6 +189,7 @@
 				B2DBF2492AB09601001F053A /* ProgressLabel.swift */,
 				B2E91D812AB201E000468E49 /* FadeScrollView.swift */,
 				B287E84D2AB3312B00AB7004 /* ShadowImageView.swift */,
+				B2FACC612AB4492B0020030E /* NextStepButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -299,6 +305,8 @@
 				B27E84162AAF53DD0089C5B8 /* ScannerViewController.swift in Sources */,
 				B287E8532AB336FE00AB7004 /* IntExtensions.swift in Sources */,
 				B27E84242AAF686F0089C5B8 /* Recipe.swift in Sources */,
+				B2FACC622AB4492B0020030E /* NextStepButton.swift in Sources */,
+				B2F225C82AB4A14D0014C768 /* DetailsViewModel.swift in Sources */,
 				B27E84272AAF6B110089C5B8 /* NetworkRecipesFetcher.swift in Sources */,
 				B2E91D842AB244B400468E49 /* UIStackViewExtensions.swift in Sources */,
 				B287E84E2AB3312B00AB7004 /* ShadowImageView.swift in Sources */,
