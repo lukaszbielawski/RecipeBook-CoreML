@@ -11,10 +11,6 @@ final class TabBarViewController: UITabBarController, UITabBarControllerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
 
         let firstTab = RecipesTableViewController()
         let firstTabBarItem = UITabBarItem(title: "Recipes", image: UIImage(systemName: "book.fill"),
@@ -28,9 +24,8 @@ final class TabBarViewController: UITabBarController, UITabBarControllerDelegate
         secondTab.tabBarItem = secondTabBarItem
 
         self.viewControllers = [firstTab, secondTab]
+
     }
 
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        print(viewController.title!)
-    }
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {}
 }

@@ -28,7 +28,7 @@ final class DetailsViewController: UIViewController {
         }
     }
 
-    typealias Ingredient = (stepNumber: Int, name: String, image: UIImage)
+    typealias Ingredient = DetailsViewModel.Ingredient
 
     lazy var detailsTitleLabel = {
         let detailsTitleLabel = UILabel()
@@ -252,6 +252,7 @@ extension DetailsViewController {
         NSLayoutConstraint.activate([
             ingredientLabel.topAnchor.constraint(equalTo: ingredientView.topAnchor),
             ingredientLabel.leadingAnchor.constraint(equalTo: ingredientView.leadingAnchor),
+            ingredientLabel.trailingAnchor.constraint(equalTo: ingredientView.trailingAnchor),
             ingredientImageView.topAnchor.constraint(equalTo: ingredientLabel.bottomAnchor, constant: 8),
             ingredientImageView.bottomAnchor.constraint(equalTo: ingredientView.bottomAnchor),
             ingredientImageView.leadingAnchor.constraint(equalTo: ingredientView.leadingAnchor),
@@ -268,6 +269,7 @@ extension DetailsViewController {
         ingredientLabel.textColor = UIColor.secondaryColor
         ingredientLabel.numberOfLines = 1
         ingredientLabel.adjustsFontSizeToFitWidth = true
+        ingredientLabel.minimumScaleFactor = 0.9
         ingredientLabel.textAlignment = .center
         ingredientLabel.text = named
         return ingredientLabel

@@ -172,17 +172,6 @@ final class RecipesTableViewCell: UITableViewCell {
     func loadData() {
         guard let recipeData = recipeData else { return }
 
-        if var imageUrl = recipeData.image {
-            Task {
-                do {
-                    imageUrl = imageUrl.replacingOccurrences(of: "556x370", with: "636x393")
-                    recipeImageView.image = try await ImageDownloader.shared.downloadImage(from: imageUrl)
-                } catch {
-                    print(error)
-                }
-            }
-        }
-
         recipeTitleLabel.text = recipeData.title
 
         recipeTimeLabel.attributedText = "\(recipeData.readyInMinutes)'"
@@ -201,6 +190,17 @@ final class RecipesTableViewCell: UITableViewCell {
         }
 
         healthScoreLabel.progress = Float(recipeData.healthScore)
+
+        if var imageUrl = recipeData.image {
+            Task {
+                do {
+                    imageUrl = imageUrl.replacingOccurrences(of: "556x370", with: "636x393")
+                    recipeImageView.image = try await ImageDownloader.shared.downloadImage(from: imageUrl)
+                } catch {
+                    print(error)
+                }
+            }
+        }
     }
 
     @available(*, unavailable)

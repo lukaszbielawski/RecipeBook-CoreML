@@ -5,30 +5,79 @@
 //  Created by Łukasz Bielawski on 11/09/2023.
 //
 
+import Combine
 import UIKit
 
-final class RecipesTableViewController: UIViewController, UITableViewDelegate {
+final class RecipesTableViewController: UIViewController, UITableViewDelegate, Taggable {
     var tableView = UITableView()
     var viewModel = RecipesViewModel()
+    var tag: TabType = .recipes
+
+    var searchViewTopConstraint: NSLayoutConstraint?
+    var tableViewTopConstraint: NSLayoutConstraint?
+    var filterViewTopConstraint: NSLayoutConstraint?
+
+    var finishedLoadingDataSubscribtion: AnyCancellable?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Recipes"
         navigationController?.delegate = self
         setup()
+        print("xd")
+        setupSubscribtion()
         viewModel.loadRecipes()
     }
 
+    lazy var filterView: FilterView = {
+        let filterView = FilterView()
+        return filterView
+    }()
+
+    lazy var searchView: SearchView = {
+        let searchView = SearchView()
+
+        searchView.searchTextField.delegate = self
+
+        searchView.showFiltersIconView.addGestureRecognizer(UITapGestureRecognizer(
+            target: self, action: #selector(showFiltersImageViewDidTapped)))
+
+        searchView.searchButton.addGestureRecognizer(UITapGestureRecognizer(
+            target: self, action: #selector(searchButtonDidTapped)))
+
+        return searchView
+    }()
+
+    lazy var maskFilterView: UIView = {
+        let maskFilterView = UIView()
+        maskFilterView.translatesAutoresizingMaskIntoConstraints = false
+        maskFilterView.backgroundColor = .backgroundColor
+        return maskFilterView
+    }()
+
+    @objc private func showFiltersImageViewDidTapped(sender: UITapGestureRecognizer) {
+        searchView.showFiltersIconView.isExtended.toggle()
+        animateFilterView()
+    }
+
+    @objc private func searchButtonDidTapped() {
+        view.endEditing(true)
+
+        var queryItems: [String] = filterView.getFilters()
+        queryItems.append(searchView.searchTextField.getTextFieldValue())
+
+        viewModel.search(withQueryItems: queryItems)
+        searchView.showFiltersIconView.isExtended = false
+        animateFilterView()
+    }
+
     func setup() {
-        navigationController?.navigationBar.topItem?.title = "Explore Recipes"
-        navigationController?.navigationBar.prefersLargeTitles = true
-//        navigationController?.navigationBar.titleTextAttributes =
-//            [NSAttributedString.Key.foregroundColor: UIColor.accentColor]
-//        navigationController?.navigationBar.largeTitleTextAttributes =
-//            [NSAttributedString.Key.foregroundColor: UIColor.accentColor]
         view.backgroundColor = .backgroundColor
         tableView.backgroundColor = .backgroundColor
+
         view.addSubview(tableView)
+        view.addSubview(filterView)
+        view.addSubview(maskFilterView)
+        view.addSubview(searchView)
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -40,18 +89,75 @@ final class RecipesTableViewController: UIViewController, UITableViewDelegate {
         tableView.showsVerticalScrollIndicator = false
 
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
 
+            filterView.leadingAnchor.constraint(equalTo: tableView.leadingAnchor, constant: 16),
+            filterView.trailingAnchor.constraint(equalTo: tableView.trailingAnchor, constant: -16),
+
+            maskFilterView.topAnchor.constraint(equalTo: view.topAnchor),
+            maskFilterView.bottomAnchor.constraint(equalTo: tableView.topAnchor),
+            maskFilterView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            maskFilterView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+
+            searchView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            searchView.heightAnchor.constraint(equalToConstant: 50),
         ])
+        filterViewTopConstraint = filterView.topAnchor.constraint(
+            equalTo: searchView.bottomAnchor, constant: -view.layer.bounds.height / 2)
+
+        filterViewTopConstraint?.isActive = true
+
+        tableViewTopConstraint = tableView.topAnchor.constraint(equalTo: searchView.bottomAnchor)
+        tableViewTopConstraint?.isActive = true
+
+        searchViewTopConstraint = searchView.topAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8)
+        searchViewTopConstraint?.isActive = true
 
         tableView.register(RecipesTableViewCell.self, forCellReuseIdentifier: "cell")
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    private func setupSubscribtion() {
+        finishedLoadingDataSubscribtion =
+            viewModel
+                .dataLoadingFinishedPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { _ in
+                    self.tableView.reloadData()
+                }
+    }
+
+    private func animateFilterView() {
+        guard let filterViewTopConstraint = filterViewTopConstraint else { return }
+
+        UIView.animate(withDuration: 1.0) {
+            filterViewTopConstraint.constant =
+                self.searchView.showFiltersIconView.isExtended ? 16 : -self.view.layer.bounds.height / 2
+            self.view.layoutIfNeeded()
+        }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.topItem?.title = tag.title
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        searchViewTopConstraint?.constant = max(-scrollView.contentOffset.y, 0) + 8
+        tableViewTopConstraint?.constant = min(scrollView.contentOffset.y, 0)
+    }
+}
+
+extension RecipesTableViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        print("")
+        searchButtonDidTapped()
+        return true
     }
 }
 
