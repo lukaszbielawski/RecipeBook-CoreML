@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NextStepButton: UIButton {
+final class NextStepButton: UIButton {
     var innerText: String = "" {
         didSet {
             innerLabel?.text = innerText

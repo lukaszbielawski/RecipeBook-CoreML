@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class SearchView: UIView {
+final class SearchView: UIView {
     let searchTextField = SearchTextField()
     let searchButton = SearchButton()
     let showFiltersIconView = ShowFiltersImageView()

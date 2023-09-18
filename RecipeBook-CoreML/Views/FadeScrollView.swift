@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FadeScrollView: UIScrollView {
+final class FadeScrollView: UIScrollView {
     let fadePercentage: Double = 0.2
     let gradientLayer = CAGradientLayer()
     let transparentColor = UIColor.clear.cgColor

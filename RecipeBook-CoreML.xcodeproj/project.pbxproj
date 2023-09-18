@@ -28,10 +28,7 @@
 		B27E842D2AAF6FE10089C5B8 /* FakeRecipesFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27E842C2AAF6FE10089C5B8 /* FakeRecipesFetcher.swift */; };
 		B27E84302AAF72010089C5B8 /* RecipesFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27E842F2AAF72010089C5B8 /* RecipesFetcher.swift */; };
 		B27E84322AAF7C9B0089C5B8 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27E84312AAF7C9B0089C5B8 /* StringExtensions.swift */; };
-		B287E84E2AB3312B00AB7004 /* ShadowImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B287E84D2AB3312B00AB7004 /* ShadowImageView.swift */; };
 		B287E8532AB336FE00AB7004 /* IntExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B287E8522AB336FE00AB7004 /* IntExtensions.swift */; };
-		B2DB81B22AB6EA3E000A3061 /* fakeData2.json in Resources */ = {isa = PBXBuildFile; fileRef = B2DB81B12AB6EA3E000A3061 /* fakeData2.json */; };
-		B2DB81B62AB6F2A9000A3061 /* fakeData3.json in Resources */ = {isa = PBXBuildFile; fileRef = B2DB81B52AB6F2A9000A3061 /* fakeData3.json */; };
 		B2DB81B82AB6FAC8000A3061 /* RecipeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DB81B72AB6FAC8000A3061 /* RecipeContainer.swift */; };
 		B2DB81BA2AB7019E000A3061 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DB81B92AB7019E000A3061 /* SearchView.swift */; };
 		B2DB81BC2AB7038C000A3061 /* SearchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DB81BB2AB7038C000A3061 /* SearchButton.swift */; };
@@ -72,10 +69,7 @@
 		B27E842C2AAF6FE10089C5B8 /* FakeRecipesFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeRecipesFetcher.swift; sourceTree = "<group>"; };
 		B27E842F2AAF72010089C5B8 /* RecipesFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesFetcher.swift; sourceTree = "<group>"; };
 		B27E84312AAF7C9B0089C5B8 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
-		B287E84D2AB3312B00AB7004 /* ShadowImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowImageView.swift; sourceTree = "<group>"; };
 		B287E8522AB336FE00AB7004 /* IntExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExtensions.swift; sourceTree = "<group>"; };
-		B2DB81B12AB6EA3E000A3061 /* fakeData2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = fakeData2.json; sourceTree = "<group>"; };
-		B2DB81B52AB6F2A9000A3061 /* fakeData3.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = fakeData3.json; sourceTree = "<group>"; };
 		B2DB81B72AB6FAC8000A3061 /* RecipeContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeContainer.swift; sourceTree = "<group>"; };
 		B2DB81B92AB7019E000A3061 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		B2DB81BB2AB7038C000A3061 /* SearchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchButton.swift; sourceTree = "<group>"; };
@@ -196,8 +190,6 @@
 			isa = PBXGroup;
 			children = (
 				B27E842A2AAF6F0B0089C5B8 /* fakeData.json */,
-				B2DB81B12AB6EA3E000A3061 /* fakeData2.json */,
-				B2DB81B52AB6F2A9000A3061 /* fakeData3.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -218,7 +210,6 @@
 				B2DBF23E2AB05DBE001F053A /* PaddingLabel.swift */,
 				B2DBF2492AB09601001F053A /* ProgressLabel.swift */,
 				B2E91D812AB201E000468E49 /* FadeScrollView.swift */,
-				B287E84D2AB3312B00AB7004 /* ShadowImageView.swift */,
 				B2FACC612AB4492B0020030E /* NextStepButton.swift */,
 				B24CDB812AB5A9BD00950487 /* ButtonInnerLabel.swift */,
 				B24CDB872AB5CA3600950487 /* SearchTextField.swift */,
@@ -298,8 +289,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B27E842B2AAF6F0B0089C5B8 /* fakeData.json in Resources */,
-				B2DB81B22AB6EA3E000A3061 /* fakeData2.json in Resources */,
-				B2DB81B62AB6F2A9000A3061 /* fakeData3.json in Resources */,
 				B27E83FC2AAEF53D0089C5B8 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -355,7 +344,6 @@
 				B24CDB842AB5BDAF00950487 /* Taggable.swift in Sources */,
 				B27E84272AAF6B110089C5B8 /* NetworkRecipesFetcher.swift in Sources */,
 				B2E91D842AB244B400468E49 /* UIStackViewExtensions.swift in Sources */,
-				B287E84E2AB3312B00AB7004 /* ShadowImageView.swift in Sources */,
 				B2DBF23F2AB05DBE001F053A /* PaddingLabel.swift in Sources */,
 				B2E91D7E2AB1AFFE00468E49 /* DetailsViewController.swift in Sources */,
 				B2DBF2432AB063B8001F053A /* ImageFetcher.swift in Sources */,

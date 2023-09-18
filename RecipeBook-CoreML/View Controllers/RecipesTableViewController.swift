@@ -19,6 +19,16 @@ final class RecipesTableViewController: UIViewController, UITableViewDelegate, T
 
     var finishedLoadingDataSubscribtion: AnyCancellable?
 
+    var isSearchButtonActive = true {
+        didSet {
+            if !isSearchButtonActive {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    self.isSearchButtonActive = true
+                }
+            }
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.delegate = self
@@ -60,6 +70,9 @@ final class RecipesTableViewController: UIViewController, UITableViewDelegate, T
     }
 
     @objc private func searchButtonDidTapped() {
+        guard isSearchButtonActive else { return }
+        isSearchButtonActive = false
+
         view.endEditing(true)
 
         var queryItems: [String] = filterView.getFilters()

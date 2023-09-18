@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchTextField: UITextField {
+final class SearchTextField: UITextField {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.translatesAutoresizingMaskIntoConstraints = false

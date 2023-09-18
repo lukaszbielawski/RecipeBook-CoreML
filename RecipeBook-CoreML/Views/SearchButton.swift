@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class SearchButton: UIButton {
+final class SearchButton: UIButton {
     let innerLabel = ButtonInnerLabel()
 
     init() {

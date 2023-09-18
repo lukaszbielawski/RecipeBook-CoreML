@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-class NetworkRecipesFetcher: RecipesFetcher {
+final class NetworkRecipesFetcher: RecipesFetcher {
     var requestType: NetworkRecipesRequestType = .randomRecipes
 
     var url: URL?

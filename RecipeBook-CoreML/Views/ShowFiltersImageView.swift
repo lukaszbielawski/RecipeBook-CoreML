@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ShowFiltersImageView: UIImageView {
+final class ShowFiltersImageView: UIImageView {
     var isExtended: Bool = false {
         didSet {
             if self.isExtended {
