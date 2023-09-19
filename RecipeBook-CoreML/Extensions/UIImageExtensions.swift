@@ -7,6 +7,32 @@
 
 import Foundation
 import UIKit
+import Vision
+
+extension UIImage.Orientation {
+    var toCGImagePropertyOrientation: CGImagePropertyOrientation {
+        switch self {
+        case .up:
+            return .up
+        case .down:
+            return .down
+        case .left:
+            return .left
+        case .right:
+            return .right
+        case .upMirrored:
+            return .upMirrored
+        case .downMirrored:
+            return .downMirrored
+        case .leftMirrored:
+            return .leftMirrored
+        case .rightMirrored:
+            return .rightMirrored
+        @unknown default:
+            return .down
+        }
+    }
+}
 
 extension UIImage {
     var cropImage: UIImage {

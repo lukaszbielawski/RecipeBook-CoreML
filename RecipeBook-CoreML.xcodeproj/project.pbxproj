@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B20974032AB984850037EC43 /* ImageClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20974022AB984850037EC43 /* ImageClassifier.swift */; };
+		B20974082AB9987A0037EC43 /* Recipes.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = B20974072AB9987A0037EC43 /* Recipes.mlmodel */; };
+		B209740C2AB9BBD10037EC43 /* TakePhotoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209740B2AB9BBD10037EC43 /* TakePhotoButton.swift */; };
 		B24CDB822AB5A9BD00950487 /* ButtonInnerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24CDB812AB5A9BD00950487 /* ButtonInnerLabel.swift */; };
 		B24CDB842AB5BDAF00950487 /* Taggable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24CDB832AB5BDAF00950487 /* Taggable.swift */; };
 		B24CDB862AB5BF1900950487 /* TabType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24CDB852AB5BF1900950487 /* TabType.swift */; };
@@ -46,6 +49,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B20974022AB984850037EC43 /* ImageClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageClassifier.swift; sourceTree = "<group>"; };
+		B20974072AB9987A0037EC43 /* Recipes.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Recipes.mlmodel; sourceTree = "<group>"; };
+		B209740B2AB9BBD10037EC43 /* TakePhotoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakePhotoButton.swift; sourceTree = "<group>"; };
 		B24CDB812AB5A9BD00950487 /* ButtonInnerLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonInnerLabel.swift; sourceTree = "<group>"; };
 		B24CDB832AB5BDAF00950487 /* Taggable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Taggable.swift; sourceTree = "<group>"; };
 		B24CDB852AB5BF1900950487 /* TabType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabType.swift; sourceTree = "<group>"; };
@@ -97,6 +103,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B20974002AB9846F0037EC43 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B20974022AB984850037EC43 /* ImageClassifier.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		B27E83E62AAEF53C0089C5B8 = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +130,7 @@
 		B27E83F12AAEF53C0089C5B8 /* RecipeBook-CoreML */ = {
 			isa = PBXGroup;
 			children = (
+				B2DEE2F52AB83306002E4EE0 /* CoreML */,
 				B2DBF2442AB063F2001F053A /* Utilities */,
 				B2DBF2402AB05DC5001F053A /* Views */,
 				B27E842E2AAF71F70089C5B8 /* Protocols */,
@@ -217,6 +232,7 @@
 				B24CDB8D2AB5E15F00950487 /* FilterView.swift */,
 				B2DB81B92AB7019E000A3061 /* SearchView.swift */,
 				B2DB81BB2AB7038C000A3061 /* SearchButton.swift */,
+				B209740B2AB9BBD10037EC43 /* TakePhotoButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -227,6 +243,15 @@
 				B2DBF2422AB063B8001F053A /* ImageFetcher.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		B2DEE2F52AB83306002E4EE0 /* CoreML */ = {
+			isa = PBXGroup;
+			children = (
+				B20974072AB9987A0037EC43 /* Recipes.mlmodel */,
+				B20974002AB9846F0037EC43 /* Services */,
+			);
+			path = CoreML;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -339,6 +364,8 @@
 				B24CDB8E2AB5E15F00950487 /* FilterView.swift in Sources */,
 				B27E84242AAF686F0089C5B8 /* Recipe.swift in Sources */,
 				B2FACC622AB4492B0020030E /* NextStepButton.swift in Sources */,
+				B209740C2AB9BBD10037EC43 /* TakePhotoButton.swift in Sources */,
+				B20974082AB9987A0037EC43 /* Recipes.mlmodel in Sources */,
 				B2DB81BE2AB714DE000A3061 /* NetworkRecipesRequestType.swift in Sources */,
 				B2F225C82AB4A14D0014C768 /* DetailsViewModel.swift in Sources */,
 				B24CDB842AB5BDAF00950487 /* Taggable.swift in Sources */,
@@ -348,6 +375,7 @@
 				B2E91D7E2AB1AFFE00468E49 /* DetailsViewController.swift in Sources */,
 				B2DBF2432AB063B8001F053A /* ImageFetcher.swift in Sources */,
 				B27E841E2AAF5CFE0089C5B8 /* RecipesTableViewCell.swift in Sources */,
+				B20974032AB984850037EC43 /* ImageClassifier.swift in Sources */,
 				B27E83F52AAEF53C0089C5B8 /* SceneDelegate.swift in Sources */,
 				B24CDB882AB5CA3600950487 /* SearchTextField.swift in Sources */,
 				B27E842D2AAF6FE10089C5B8 /* FakeRecipesFetcher.swift in Sources */,
@@ -485,6 +513,7 @@
 				DEVELOPMENT_TEAM = J6U333HZ7J;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "RecipeBook-CoreML/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow access to camera to scan surrounding for ingredients";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -514,6 +543,7 @@
 				DEVELOPMENT_TEAM = J6U333HZ7J;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "RecipeBook-CoreML/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow access to camera to scan surrounding for ingredients";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
