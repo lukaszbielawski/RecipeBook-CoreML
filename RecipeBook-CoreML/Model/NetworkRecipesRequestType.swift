@@ -13,9 +13,7 @@ enum NetworkRecipesRequestType {
 
     case searchRecipes
     case randomRecipes
-
-    //    "https://api.spoonacular.com/recipes/complexSearch"
-    //    "https://api.spoonacular.com/recipes/random"
+    case scannerRecipes
 
     var urlComponents: URLComponents {
         var components = URLComponents()
@@ -30,8 +28,15 @@ enum NetworkRecipesRequestType {
         case .searchRecipes:
             components.path = "/recipes/complexSearch"
             components.queryItems?.append(URLQueryItem(name: "addRecipeInformation", value: "true"))
+            components.queryItems?.append(URLQueryItem(name: "instructionsRequired", value: "true"))
         case .randomRecipes:
             components.path = "/recipes/random"
+        case .scannerRecipes:
+            components.path = "/recipes/complexSearch"
+            components.queryItems?.append(URLQueryItem(name: "addRecipeInformation", value: "true"))
+            components.queryItems?.append(URLQueryItem(name: "instructionsRequired", value: "true"))
+            components.queryItems?.append(URLQueryItem(name: "sortDirection", value: "desc"))
+            components.queryItems?.append(URLQueryItem(name: "sort", value: "min-missing-ingredients"))
         }
 
         return components
@@ -42,6 +47,8 @@ enum NetworkRecipesRequestType {
         case .randomRecipes:
             return RandomRecipes.self
         case .searchRecipes:
+            return SearchRecipes.self
+        case .scannerRecipes:
             return SearchRecipes.self
         }
     }

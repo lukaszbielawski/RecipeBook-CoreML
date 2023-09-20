@@ -22,9 +22,14 @@ final class RecipesViewModel {
 
     var optionalQueryItems: [URLQueryItem] = []
 
-    func search(withQueryItems searchQueryStrings: [String]) {
+    func search(withQueryItems searchQueryStrings: [String], scannerIngredients: [String] = []) {
         optionalQueryItems.removeAll()
-        recipesFetcher.requestType = searchQueryStrings.last == "" ? .randomRecipes : .searchRecipes
+
+        if !scannerIngredients.isEmpty {
+            recipesFetcher.requestType = .scannerRecipes
+        } else {
+            recipesFetcher.requestType = searchQueryStrings.last == "" ? .randomRecipes : .searchRecipes
+        }
 
         switch recipesFetcher.requestType {
         case .randomRecipes:
@@ -50,6 +55,15 @@ final class RecipesViewModel {
                 }
             }
             optionalQueryItems = queryItemsArray
+        case .scannerRecipes:
+            var setOfIngredients = Set<String>(["water", "salt", "oil"])
+            scannerIngredients.forEach { setOfIngredients.insert($0) }
+
+            optionalQueryItems.append(
+                URLQueryItem(name: "includeIngredients",
+                             value: setOfIngredients
+                                 .joined(separator: ","))
+            )
         }
 
         loadRecipes()
@@ -64,7 +78,10 @@ final class RecipesViewModel {
         recipesFetcher
             .fetchRecipes(type: recipesFetcher.requestType.parseType)
             .map { recipes in
-                recipes.filter { !$0.analyzedInstructions.isEmpty }
+                recipes.filter { recipe in
+                    !recipe.analyzedInstructions.isEmpty &&
+                        !(recipe.analyzedInstructions.first!.steps.count < 2)
+                }
             }
             .sink { [weak self] completion in
                 guard let self = self else { return }

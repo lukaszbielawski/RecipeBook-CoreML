@@ -6,29 +6,30 @@
 //
 
 import AVFoundation
+import Combine
 import UIKit
 import Vision
 
-final class ScannerViewController: UIViewController, Taggable {
-    var tag: TabType = .scanner
-
+final class ScannerViewController: UIViewController {
     let imagePredictor = ImagePredictor()
 
-    var counter: Int = 3
-    private var firstTime = true
+    var recipesTableViewIsLoadingSubscribtion: AnyCancellable?
 
     var session: AVCaptureSession?
     let output = AVCapturePhotoOutput()
     let previewLayer = AVCaptureVideoPreviewLayer()
 
-    var dataSource: UICollectionViewDiffableDataSource<Int, String>?
+    var dataSource: UICollectionViewDiffableDataSource<Int, String>!
 
-    var ingredientCollectionViewConstraint: NSLayoutConstraint?
+    var ingredientCollectionViewConstraint: NSLayoutConstraint!
+
+    var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
 
     lazy var takePhotoButton: CircleButton = {
         let takePhotoButton = CircleButton(systemImage: "camera.circle.fill")
         takePhotoButton.isUserInteractionEnabled = true
-        takePhotoButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapTakePhotoButton)))
+        takePhotoButton.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(didTapTakePhotoButton)))
 
         return takePhotoButton
     }()
@@ -36,14 +37,36 @@ final class ScannerViewController: UIViewController, Taggable {
     lazy var applyIngredientButton: CircleButton = {
         let applyIngredientButton = CircleButton(systemImage: "checkmark.circle.fill")
         applyIngredientButton.isUserInteractionEnabled = true
-        applyIngredientButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapApplyIngredientButton)))
+        applyIngredientButton.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(didTapApplyIngredientButton)))
 
         return applyIngredientButton
+    }()
+
+    lazy var recipesAreLoadingActivityIndicatiorView: UIActivityIndicatorView = {
+        let activityIndicatorView = UIActivityIndicatorView()
+        activityIndicatorView.style = .large
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicatorView.isHidden = true
+        return activityIndicatorView
     }()
 
     lazy var ingredientsCollection: UICollectionView = {
         var configuration = UICollectionLayoutListConfiguration(appearance: .plain)
         configuration.backgroundColor = .primaryColor
+
+        configuration.trailingSwipeActionsConfigurationProvider = { indexPath in
+            let del =
+                UIContextualAction(style: .destructive, title: "Delete") { [weak self] _, _, completion in
+                    guard let self = self else { return }
+                    self.snapshot.deleteItems([String((self.dataSource.itemIdentifier(for: indexPath))!)])
+                    self.dataSource.apply(self.snapshot)
+                    self.animateIngredientCollectionView()
+                    completion(true)
+                }
+            return UISwipeActionsConfiguration(actions: [del])
+        }
+
         let layout = UICollectionViewCompositionalLayout.list(using: configuration)
 
         let ingredientsCollection = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -65,7 +88,7 @@ final class ScannerViewController: UIViewController, Taggable {
 
         setupCollectionView()
 
-        setDataSource(["apples", "bananas", "milk"])
+        setupDataSource()
 
         checkCameraStatus()
     }
@@ -75,19 +98,23 @@ final class ScannerViewController: UIViewController, Taggable {
         view.addSubview(takePhotoButton)
         view.addSubview(ingredientsCollection)
         view.addSubview(applyIngredientButton)
+        view.addSubview(recipesAreLoadingActivityIndicatiorView)
 
         NSLayoutConstraint.activate([
             takePhotoButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32),
-            takePhotoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            ingredientsCollection.topAnchor.constraint(lessThanOrEqualTo: view.centerYAnchor),
+            takePhotoButton.trailingAnchor.constraint(equalTo: applyIngredientButton.leadingAnchor, constant: -16),
             ingredientsCollection.bottomAnchor.constraint(equalTo: takePhotoButton.bottomAnchor),
             ingredientsCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             ingredientsCollection.trailingAnchor.constraint(equalTo: takePhotoButton.leadingAnchor, constant: -16),
             applyIngredientButton.bottomAnchor.constraint(equalTo: takePhotoButton.bottomAnchor),
-            applyIngredientButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            applyIngredientButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            recipesAreLoadingActivityIndicatiorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            recipesAreLoadingActivityIndicatiorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
-        ingredientCollectionViewConstraint = ingredientsCollection.heightAnchor.constraint(equalToConstant: view.bounds.size.height / 2)
-        ingredientCollectionViewConstraint?.isActive = true
+        ingredientCollectionViewConstraint =
+            ingredientsCollection.heightAnchor.constraint(equalToConstant: view.bounds.size.height / 2)
+
+        ingredientCollectionViewConstraint.isActive = true
     }
 
     func setupCollectionView() {
@@ -99,27 +126,34 @@ final class ScannerViewController: UIViewController, Taggable {
             cell.contentView.backgroundColor = UIColor.primaryColor
         }
 
-        dataSource = UICollectionViewDiffableDataSource<Int, String>(collectionView: ingredientsCollection) { collectionView, indexPath, ingredient in
+        dataSource =
+            UICollectionViewDiffableDataSource<Int, String>(
+                collectionView: ingredientsCollection)
+        { collectionView, indexPath, ingredient in
             collectionView.dequeueConfiguredReusableCell(using: registration, for: indexPath, item: ingredient)
         }
     }
 
-    func setDataSource(_ items: [String]) {
-        counter += 1
-        var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
+    func setupDataSource() {
         snapshot.appendSections([0])
-        snapshot.appendItems(items)
-        print("xdsad")
+        snapshot.appendItems([])
         dataSource?.apply(snapshot)
+    }
 
-        guard !firstTime else {
-            firstTime = false
-            return
+    func appendToSnapshot(_ items: [String]) {
+        if ingredientsCollection.collectionViewLayout.collectionViewContentSize.height == 0.0 {
+            ingredientCollectionViewConstraint.constant = 1.0
         }
+        snapshot.appendItems(items)
+        dataSource?.apply(snapshot)
+        animateIngredientCollectionView()
+    }
 
+    private func animateIngredientCollectionView() {
         ingredientsCollection.layoutIfNeeded()
         UIView.animate(withDuration: 1.0) {
-            self.ingredientCollectionViewConstraint?.constant = self.ingredientsCollection.collectionViewLayout.collectionViewContentSize.height
+            self.ingredientCollectionViewConstraint.constant =
+                self.ingredientsCollection.collectionViewLayout.collectionViewContentSize.height
             self.view.layoutIfNeeded()
         }
     }
@@ -127,19 +161,38 @@ final class ScannerViewController: UIViewController, Taggable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.topItem?.title = tag.title
+        navigationController?.navigationBar.topItem?.title = "Scan ingredients"
+
+        recipesAreLoadingActivityIndicatiorView.stopAnimating()
+        recipesAreLoadingActivityIndicatiorView.isHidden = true
+
+        session?.startRunning()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
+    private func setupSubscribtion(recipesTableViewController: RecipesTableViewController) {
+        recipesTableViewIsLoadingSubscribtion =
+            recipesTableViewController.viewModel
+                .dataLoadingFinishedPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] _ in
+                    guard let self = self else { return }
+
+                    self.recipesTableViewIsLoadingSubscribtion?.cancel()
+                    self.recipesTableViewIsLoadingSubscribtion = nil
+                    self.tabBarController?.selectedViewController = recipesTableViewController
+                }
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         previewLayer.frame = view.bounds
         ingredientsCollection.layoutIfNeeded()
-        ingredientCollectionViewConstraint?.constant = ingredientsCollection.collectionViewLayout.collectionViewContentSize.height
-        print("xdadas")
+        ingredientCollectionViewConstraint.constant =
+            ingredientsCollection.collectionViewLayout.collectionViewContentSize.height
     }
 }
 
@@ -196,11 +249,26 @@ extension ScannerViewController {
     }
 
     @objc private func didTapApplyIngredientButton() {
-        var array: [String] = []
-        for number in 1 ... counter {
-            array.append(String("different".shuffled()))
+        guard let dataSource else { return }
+
+        let identifiers = dataSource.snapshot().itemIdentifiers
+
+        guard !identifiers.isEmpty else { return }
+
+        for id in identifiers {
+            print(id)
         }
-        setDataSource(array.shuffled())
+
+        session?.stopRunning()
+
+        let recipesTableViewController =
+            tabBarController?.viewControllers?.first as! RecipesTableViewController
+
+        recipesAreLoadingActivityIndicatiorView.startAnimating()
+        recipesAreLoadingActivityIndicatiorView.isHidden = false
+
+        setupSubscribtion(recipesTableViewController: recipesTableViewController)
+        recipesTableViewController.performScannerSearch(ingredients: identifiers)
     }
 }
 
@@ -227,15 +295,11 @@ extension ScannerViewController {
 
     private func imagePredictionHandler(_ predictions: [VNClassificationObservation]?) {
         guard let predictions = predictions else {
-//            updatePredictionLabel("No predictions. (Check console log.)")
             print("no predictions")
             return
         }
+        let topPrediction = Array(predictions.sorted(by: { $0.confidence > $1.confidence })).first
 
-        let topThreePredictions = Array(predictions.sorted(by: { $0.confidence > $1.confidence })[0 ... 2])
-
-        for prediction in topThreePredictions {
-            print(prediction.identifier, prediction.confidence)
-        }
+        appendToSnapshot([topPrediction!.identifier])
     }
 }

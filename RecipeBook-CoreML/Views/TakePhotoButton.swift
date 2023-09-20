@@ -11,10 +11,9 @@ import UIKit
 
 class CircleButton: UIImageView {
     let diameter: CGFloat
-    
+
     let systemImage: String
-    
-    
+
     init(diameter: CGFloat = 75.0, systemImage: String) {
         self.diameter = diameter
         self.systemImage = systemImage

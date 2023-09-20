@@ -8,10 +8,9 @@
 import Combine
 import UIKit
 
-final class RecipesTableViewController: UIViewController, UITableViewDelegate, Taggable {
+final class RecipesTableViewController: UIViewController, UITableViewDelegate {
     var tableView = UITableView()
     var viewModel = RecipesViewModel()
-    var tag: TabType = .recipes
 
     var searchViewTopConstraint: NSLayoutConstraint?
     var tableViewTopConstraint: NSLayoutConstraint?
@@ -33,7 +32,6 @@ final class RecipesTableViewController: UIViewController, UITableViewDelegate, T
         super.viewDidLoad()
         navigationController?.delegate = self
         setup()
-        print("xd")
         setupSubscribtion()
         viewModel.loadRecipes()
     }
@@ -81,6 +79,12 @@ final class RecipesTableViewController: UIViewController, UITableViewDelegate, T
         viewModel.search(withQueryItems: queryItems)
         searchView.showFiltersIconView.isExtended = false
         animateFilterView()
+    }
+
+    func performScannerSearch(ingredients: [String]) {
+        let mappedIngredients = ingredients.map { $0.replacingOccurrences(of: " ", with: "+") }
+
+        viewModel.search(withQueryItems: [], scannerIngredients: mappedIngredients)
     }
 
     func setup() {
@@ -156,7 +160,7 @@ final class RecipesTableViewController: UIViewController, UITableViewDelegate, T
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.topItem?.title = tag.title
+        navigationController?.navigationBar.topItem?.title = "Explore recipes"
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -210,56 +214,5 @@ extension RecipesTableViewController: UINavigationControllerDelegate {
                               to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?
     {
         return PushPopAnimator(operation: operation)
-    }
-}
-
-class PushPopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-    let operation: UINavigationController.Operation
-
-    init(operation: UINavigationController.Operation) {
-        self.operation = operation
-        super.init()
-    }
-
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.7
-    }
-
-    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        let from = transitionContext.viewController(forKey: .from)!
-        let target = transitionContext.viewController(forKey: .to)!
-
-        let rightTransform = CGAffineTransform(translationX: transitionContext.containerView.bounds.size.width, y: 0)
-        let leftTransform = CGAffineTransform(translationX: -transitionContext.containerView.bounds.size.width, y: 0)
-
-        if operation == .push {
-            target.view.transform = rightTransform
-            transitionContext.containerView.addSubview(target.view)
-            UIView.animate(withDuration: transitionDuration(using: transitionContext),
-                           delay: 0,
-                           usingSpringWithDamping: 0.9,
-                           initialSpringVelocity: 0.0,
-                           animations: {
-                               from.view.transform = leftTransform
-                               target.view.transform = .identity
-                           }, completion: { _ in
-                               from.view.transform = .identity
-                               transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-                           })
-        } else if operation == .pop {
-            target.view.transform = leftTransform
-            transitionContext.containerView.insertSubview(target.view, belowSubview: from.view)
-            UIView.animate(withDuration: transitionDuration(using: transitionContext),
-                           delay: 0,
-                           usingSpringWithDamping: 0.9,
-                           initialSpringVelocity: 0.0,
-                           animations: {
-                               target.view.transform = .identity
-                               from.view.transform = rightTransform
-                           }, completion: { _ in
-                               from.view.transform = .identity
-                               transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-                           })
-        }
     }
 }

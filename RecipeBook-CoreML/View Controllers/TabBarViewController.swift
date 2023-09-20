@@ -24,8 +24,12 @@ final class TabBarViewController: UITabBarController, UITabBarControllerDelegate
         secondTab.tabBarItem = secondTabBarItem
 
         self.viewControllers = [firstTab, secondTab]
-
     }
 
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {}
+    func tabBarController(_ tabBarController: UITabBarController,
+                          animationControllerForTransitionFrom fromVC: UIViewController,
+                          to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?
+    {
+        return TransitioningObject()
+    }
 }
