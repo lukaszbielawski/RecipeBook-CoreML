@@ -20,7 +20,7 @@ enum ImagePredictorError: Error {
 
 class ImagePredictor {
     static func createVisionImageClassifier() throws -> VNCoreMLModel {
-        let mlModelImageClassifier = try? IngredientsModel(configuration: MLModelConfiguration())
+        let mlModelImageClassifier = try? IngredientsImageClassifier(configuration: MLModelConfiguration())
 
         guard let mlModelImageClassifier else {
             throw ImagePredictorError.mlModelInit

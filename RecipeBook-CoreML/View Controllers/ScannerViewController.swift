@@ -300,6 +300,6 @@ extension ScannerViewController {
         }
         let topPrediction = Array(predictions.sorted(by: { $0.confidence > $1.confidence })).first
 
-        appendToSnapshot([topPrediction!.identifier])
+        appendToSnapshot([topPrediction!.identifier.replacingOccurrences(of: "_", with: " ")])
     }
 }

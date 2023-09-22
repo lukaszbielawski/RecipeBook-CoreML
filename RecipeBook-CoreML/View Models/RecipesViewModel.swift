@@ -15,7 +15,7 @@ final class RecipesViewModel {
 
     var recipesFetcher: RecipesFetcher
 
-    init(recipes: [Recipe] = [], recipesFetcher: RecipesFetcher = FakeRecipesFetcher()) {
+    init(recipes: [Recipe] = [], recipesFetcher: RecipesFetcher = NetworkRecipesFetcher()) {
         self.recipes = recipes
         self.recipesFetcher = recipesFetcher
     }

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		B20974032AB984850037EC43 /* ImageClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20974022AB984850037EC43 /* ImageClassifier.swift */; };
-		B20974082AB9987A0037EC43 /* IngredientsModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = B20974072AB9987A0037EC43 /* IngredientsModel.mlmodel */; };
 		B209740C2AB9BBD10037EC43 /* TakePhotoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209740B2AB9BBD10037EC43 /* TakePhotoButton.swift */; };
 		B24CDB822AB5A9BD00950487 /* ButtonInnerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24CDB812AB5A9BD00950487 /* ButtonInnerLabel.swift */; };
 		B24CDB882AB5CA3600950487 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24CDB872AB5CA3600950487 /* SearchTextField.swift */; };
@@ -44,13 +43,13 @@
 		B2E91D802AB1E49900468E49 /* CAGradientLayerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E91D7F2AB1E49900468E49 /* CAGradientLayerExtensions.swift */; };
 		B2E91D822AB201E000468E49 /* FadeScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E91D812AB201E000468E49 /* FadeScrollView.swift */; };
 		B2E91D842AB244B400468E49 /* UIStackViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E91D832AB244B400468E49 /* UIStackViewExtensions.swift */; };
+		B2EB26952ABDE6AD004DEB05 /* IngredientsImageClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = B2EB26942ABDE6AD004DEB05 /* IngredientsImageClassifier.mlmodel */; };
 		B2F225C82AB4A14D0014C768 /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F225C72AB4A14D0014C768 /* DetailsViewModel.swift */; };
 		B2FACC622AB4492B0020030E /* NextStepButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FACC612AB4492B0020030E /* NextStepButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B20974022AB984850037EC43 /* ImageClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageClassifier.swift; sourceTree = "<group>"; };
-		B20974072AB9987A0037EC43 /* IngredientsModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = IngredientsModel.mlmodel; sourceTree = "<group>"; };
 		B209740B2AB9BBD10037EC43 /* TakePhotoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakePhotoButton.swift; sourceTree = "<group>"; };
 		B24CDB812AB5A9BD00950487 /* ButtonInnerLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonInnerLabel.swift; sourceTree = "<group>"; };
 		B24CDB872AB5CA3600950487 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
@@ -88,6 +87,7 @@
 		B2E91D7F2AB1E49900468E49 /* CAGradientLayerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAGradientLayerExtensions.swift; sourceTree = "<group>"; };
 		B2E91D812AB201E000468E49 /* FadeScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeScrollView.swift; sourceTree = "<group>"; };
 		B2E91D832AB244B400468E49 /* UIStackViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackViewExtensions.swift; sourceTree = "<group>"; };
+		B2EB26942ABDE6AD004DEB05 /* IngredientsImageClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = IngredientsImageClassifier.mlmodel; sourceTree = "<group>"; };
 		B2F225C72AB4A14D0014C768 /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
 		B2FACC612AB4492B0020030E /* NextStepButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextStepButton.swift; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; };
 /* End PBXFileReference section */
@@ -248,7 +248,7 @@
 		B2DEE2F52AB83306002E4EE0 /* CoreML */ = {
 			isa = PBXGroup;
 			children = (
-				B20974072AB9987A0037EC43 /* IngredientsModel.mlmodel */,
+				B2EB26942ABDE6AD004DEB05 /* IngredientsImageClassifier.mlmodel */,
 				B20974002AB9846F0037EC43 /* Services */,
 			);
 			path = CoreML;
@@ -359,12 +359,12 @@
 				B2DB81BA2AB7019E000A3061 /* SearchView.swift in Sources */,
 				B27E84162AAF53DD0089C5B8 /* ScannerViewController.swift in Sources */,
 				B2DB81B82AB6FAC8000A3061 /* RecipeContainer.swift in Sources */,
+				B2EB26952ABDE6AD004DEB05 /* IngredientsImageClassifier.mlmodel in Sources */,
 				B287E8532AB336FE00AB7004 /* IntExtensions.swift in Sources */,
 				B24CDB8E2AB5E15F00950487 /* FilterView.swift in Sources */,
 				B27E84242AAF686F0089C5B8 /* Recipe.swift in Sources */,
 				B2FACC622AB4492B0020030E /* NextStepButton.swift in Sources */,
 				B209740C2AB9BBD10037EC43 /* TakePhotoButton.swift in Sources */,
-				B20974082AB9987A0037EC43 /* IngredientsModel.mlmodel in Sources */,
 				B2DB81BE2AB714DE000A3061 /* NetworkRecipesRequestType.swift in Sources */,
 				B2F225C82AB4A14D0014C768 /* DetailsViewModel.swift in Sources */,
 				B27E84272AAF6B110089C5B8 /* NetworkRecipesFetcher.swift in Sources */,
@@ -513,6 +513,7 @@
 				DEVELOPMENT_TEAM = J6U333HZ7J;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "RecipeBook-CoreML/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Recipe Book";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow access to camera to scan surrounding for ingredients";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -543,6 +544,7 @@
 				DEVELOPMENT_TEAM = J6U333HZ7J;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "RecipeBook-CoreML/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Recipe Book";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow access to camera to scan surrounding for ingredients";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
