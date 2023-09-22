@@ -17,8 +17,7 @@ The Recipe Book app, built with UIKit, Swift Concurrency, Combine and Vision fra
   
 <h2>Presentation</h2>
 
-https://github.com/lukaszbielawski/RecipeBook-CoreML/assets/44624897/e4168546-54fd-4ec4-b38d-7aea7fcea6d8
-
+https://github.com/lukaszbielawski/RecipeBook-CoreML/assets/44624897/d9b7a6fe-0cd4-4467-890f-2cda4589fc2f
 
 <h2>Requirements</h2>
 
